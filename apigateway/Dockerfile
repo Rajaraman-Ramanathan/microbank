@@ -21,7 +21,7 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # Copy jar from build stage
-COPY --from=build /app/target/api-gateway-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # Expose the API Gateway port
 EXPOSE 8123

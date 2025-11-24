@@ -21,7 +21,7 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # Copy only the final JAR from the previous stage
-COPY --from=build /app/target/discovery-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # Expose Eureka port
 EXPOSE 8761
