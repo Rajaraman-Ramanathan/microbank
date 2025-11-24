@@ -137,17 +137,10 @@ services:
     ports:
       - "8123:8123"        # Expose API Gateway externally
     depends_on:
-      - keycloak:
-          condition: service_healthy
-      - rabbitmq
-      - maildev
-      - redis
-      - postgres-auth-service
-      - postgres-account-service
-      - postgres-transaction-service
-      - postgres-document-service
-      - minio
-      - discovery-service  # Ensure Eureka starts first
+    keycloak:
+      condition: service_healthy
+    discovery-service:
+      condition: service_started
     environment:
       # Update these if your API Gateway needs to register with Eureka
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
