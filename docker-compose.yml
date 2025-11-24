@@ -15,6 +15,11 @@ services:
     ports:
       - "9098:8080"
     command: [ "start-dev", "--import-realm" ]
+    healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank"]
+    interval: 10s
+    timeout: 5s
+    retries: 20
     networks:
       - microbank-network
 
@@ -132,7 +137,8 @@ services:
     ports:
       - "8123:8123"        # Expose API Gateway externally
     depends_on:
-      - keycloak
+      - keycloak:
+          condition: service_healthy
       - rabbitmq
       - maildev
       - redis
