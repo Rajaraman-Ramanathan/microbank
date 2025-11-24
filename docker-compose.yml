@@ -118,15 +118,22 @@ services:
     ports:
       - "8761:8761"
     depends_on:
-    - keycloak
-    - rabbitmq
-    - maildev
-    - redis
-    - postgres-auth-service
-    - postgres-account-service
-    - postgres-transaction-service
-    - postgres-document-service
-    - minio
+      keycloak:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      maildev:
+        condition: service_started
+      redis:
+        condition: service_started
+      postgres-auth-service:
+        condition: service_started
+      postgres-account-service:
+        condition: service_started
+      postgres-transaction-service:
+        condition: service_started
+      postgres-document-service:
+        condition: service_started
     networks:
       - microbank-network
 
@@ -138,10 +145,10 @@ services:
     ports:
       - "8123:8123"        # Expose API Gateway externally
     depends_on:
-    keycloak:
-      condition: service_healthy
-    discovery-service:
-      condition: service_started
+      keycloak:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
     environment:
       # Update these if your API Gateway needs to register with Eureka
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
