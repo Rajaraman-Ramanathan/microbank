@@ -17,10 +17,10 @@ services:
       - "9098:8080"
     command: [ "start-dev", "--import-realm" ]
     healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank"]
-    interval: 10s
-    timeout: 5s
-    retries: 20
+      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
     networks:
       - microbank-network
 
