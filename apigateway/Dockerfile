@@ -1,0 +1,30 @@
+# ================================
+# Stage 1: Build API Gateway
+# ================================
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source and build jar
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# ================================
+# Stage 2: Runtime Image
+# ================================
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Copy jar from build stage
+COPY --from=build /app/target/api-gateway-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose the API Gateway port
+EXPOSE 8123
+
+# Run the API Gateway
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

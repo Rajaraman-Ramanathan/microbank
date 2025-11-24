@@ -114,5 +114,21 @@ services:
     networks:
       - microbank-network
 
+  api-gateway:
+    build:
+    context: ./api-gateway
+    dockerfile: Dockerfile
+  container_name: api-gateway
+  ports:
+    - "8123:8123"        # Expose API Gateway externally
+  depends_on:
+    - discovery-service  # Ensure Eureka starts first
+  environment:
+    # Update these if your API Gateway needs to register with Eureka
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    SPRING_PROFILES_ACTIVE: docker
+  networks:
+    - microbank-network
+
 volumes:
   minio-data:
