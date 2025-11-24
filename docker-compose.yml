@@ -111,6 +111,16 @@ services:
     container_name: discovery-service
     ports:
       - "8761:8761"
+    depends_on:
+    - keycloak
+    - rabbitmq
+    - maildev
+    - redis
+    - postgres-auth-service
+    - postgres-account-service
+    - postgres-transaction-service
+    - postgres-document-service
+    - minio
     networks:
       - microbank-network
 
