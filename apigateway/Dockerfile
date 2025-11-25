@@ -23,8 +23,12 @@ WORKDIR /app
 # Copy jar from build stage
 COPY --from=build /app/target/*.jar app.jar
 
+COPY wait-for.sh /app/wait-for.sh
+RUN chmod +x /app/wait-for.sh
+
 # Expose the API Gateway port
 EXPOSE 8123
 
 # Run the API Gateway
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["/app/wait-for.sh", "keycloak", "8080", "java", "-jar", "/app/app.jar"]
+

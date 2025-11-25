@@ -1,5 +1,3 @@
-version: "2.4"
-
 networks:
   microbank-network:
     driver: bridge
@@ -18,7 +16,7 @@ services:
       - "9098:8080"
     command: [ "start-dev", "--import-realm" ]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -119,22 +117,15 @@ services:
     ports:
       - "8761:8761"
     depends_on:
-      keycloak:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
-      maildev:
-        condition: service_started
-      redis:
-        condition: service_started
-      postgres-auth-service:
-        condition: service_started
-      postgres-account-service:
-        condition: service_started
-      postgres-transaction-service:
-        condition: service_started
-      postgres-document-service:
-        condition: service_started
+      - keycloak
+      - rabbitmq
+      - maildev
+      - redis
+      - postgres-auth-service
+      - postgres-account-service
+      - postgres-transaction-service
+      - postgres-document-service
+      - minio
     networks:
       - microbank-network
 
@@ -146,10 +137,8 @@ services:
     ports:
       - "8123:8123"        # Expose API Gateway externally
     depends_on:
-      keycloak:
-        condition: service_healthy
-      discovery-service:
-        condition: service_started
+      - keycloak
+      - discovery-service
     environment:
       # Update these if your API Gateway needs to register with Eureka
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
