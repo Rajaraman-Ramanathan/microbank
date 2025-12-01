@@ -165,5 +165,24 @@ services:
     networks:
       - microbank-network
 
+  transaction-service:
+    build:
+      context: ./transaction
+      dockerfile: Dockerfile
+    container_name: transaction-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-transaction-service:5433/transaction_db
+      SPRING_DATASOURCE_USERNAME: transaction_db
+      SPRING_DATASOURCE_PASSWORD: transaction_db
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    depends_on:
+      - discovery-service
+      - postgres-transaction-service
+    networks:
+      - microbank-network
+
 volumes:
   minio-data:
