@@ -146,5 +146,24 @@ services:
     networks:
       - microbank-network
 
+  account-service:
+    build:
+      context: ./account
+      dockerfile: Dockerfile
+    container_name: account-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-account-service:5432/account_db
+      SPRING_DATASOURCE_USERNAME: account_db
+      SPRING_DATASOURCE_PASSWORD: account_db
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    depends_on:
+      - discovery-service
+      - postgres-account-service
+    networks:
+      - microbank-network
+
 volumes:
   minio-data:

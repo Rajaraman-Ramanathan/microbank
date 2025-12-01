@@ -6,7 +6,7 @@ spring:
     name: account-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5430/account_db
+    url: jdbc:postgresql://postgres-account-service:5432/account_db
     username: account_db
     password: account_db
     driver-class-name: org.postgresql.Driver
@@ -23,8 +23,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9098/realms/microbank
-          jwk-set-uri: http://localhost:9098/realms/microbank/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:8080/realms/microbank
+          jwk-set-uri: http://keycloak:8080/realms/microbank/protocol/openid-connect/certs
 
   cloud:
     discovery:
@@ -33,7 +33,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://discovery-service:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
 
