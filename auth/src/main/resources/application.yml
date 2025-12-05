@@ -6,7 +6,7 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5431/auth_db
+    url: jdbc:postgresql://postgres-transaction-service:5432/auth_db
     username: auth_db
     password: auth_db
     driver-class-name: org.postgresql.Driver
@@ -25,15 +25,15 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9098/realms/microbank
-          jwk-set-uri: http://localhost:9098/realms/microbank/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:8080/realms/microbank
+          jwk-set-uri: http://keycloak:8080/realms/microbank/protocol/openid-connect/certs
 
   cloud:
     discovery:
@@ -41,14 +41,14 @@ spring:
 
 keycloak:
   login:
-    token-url: "http://localhost:9098/realms/microbank/protocol/openid-connect/token"
+    token-url: "http://keycloak:8080/realms/microbank/protocol/openid-connect/token"
     grant-type: "password"
     client-id: "microbank-client"
     client-secret: "oVncCcoVMZCFRbiGA99ygvEcsclLcxW8"
   refresh-token:
     grant-type: "refresh_token"
   config:
-    server-url: "http://localhost:9098"
+    server-url: "http://keycloak:8080"
     realm: "master"
     username: "admin"
     password: "admin"
@@ -58,6 +58,6 @@ keycloak:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://discovery-service:8761/eureka/
     register-with-eureka: true
     fetch-registry: true

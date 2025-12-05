@@ -184,5 +184,29 @@ services:
     networks:
       - microbank-network
 
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - discovery-service
+      - postgres-auth-service
+      - redis
+      - keycloak
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth-service:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: auth_db
+      SPRING_DATASOURCE_PASSWORD: auth_db
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      
+    networks:
+      - microbank-network
+
 volumes:
   minio-data:
