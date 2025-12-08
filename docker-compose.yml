@@ -208,5 +208,31 @@ services:
     networks:
       - microbank-network
 
+  document-service:
+    build:
+      context: ./document
+      dockerfile: Dockerfile
+    container_name: document-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - discovery-service
+      - postgres-document-service
+      - minio
+      - keycloak
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-document-service:5432/document_db
+      SPRING_DATASOURCE_USERNAME: document_db
+      SPRING_DATASOURCE_PASSWORD: document_db
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: capellax
+      MINIO_SECRET_KEY: 12345678
+      MINIO_BUCKET_NAME: documents
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+
+    networks:
+      - microbank-network
+
 volumes:
   minio-data:
