@@ -10,11 +10,12 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_IMPORT: /opt/keycloak/data/import/realm-export.json
+      KC_PROXY: edge # Not to use in production, only for development purposes
     volumes:
       - ./keycloak-config:/opt/keycloak/data/import
     ports:
       - "9098:8080"
-    command: [ "start-dev", "--import-realm" ]
+    command: [ "start-dev", "--import-realm", "--hostname-strict=false", "--hostname-strict-https=false" ] # Last two flags should use only in development
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank || exit 1"]
       interval: 10s
