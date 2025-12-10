@@ -102,7 +102,8 @@ services:
       MINIO_ROOT_USER: "capellax"
       MINIO_ROOT_PASSWORD: "12345678"
     ports:
-      - "9000:9000" # MinIO Web UI and API
+      - "9000:9000" # Minio API
+      - "9001:9001" # Minio Console
     command: server /data --console-address ":9001"
     volumes:
       - minio-data:/data
