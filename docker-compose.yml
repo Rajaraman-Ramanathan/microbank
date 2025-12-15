@@ -11,7 +11,7 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_IMPORT: /opt/keycloak/data/import/realm-export.json
       # KC_PROXY: edge # Not to use in production, only for development purposes
-      KC_HTTP_ENABLED: "true"
+      KC_HTTP_ENABLED: "true" # Enable HTTP for development; use HTTPS in production
     volumes:
       - ./keycloak-config:/opt/keycloak/data/import
     ports:
