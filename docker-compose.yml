@@ -31,6 +31,8 @@ services:
     ports:
       - "15672:15672" # Management UI
       - "5672:5672"   # AMQP Port
+    networks:
+      - microbank-network 
 
   maildev:
     image: maildev/maildev
@@ -259,7 +261,7 @@ services:
       SPRING_MAIL_USERNAME: maildev
       SPRING_MAIL_PASSWORD: maildev
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
-      
+
     networks:
       - microbank-network
 
