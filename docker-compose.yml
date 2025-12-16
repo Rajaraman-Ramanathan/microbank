@@ -237,5 +237,31 @@ services:
     networks:
       - microbank-network
 
+  notification-service:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - discovery-service
+      - rabbitmq
+      - maildev
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      SPRING_MAIL_HOST: maildev
+      SPRING_MAIL_PORT: 1025
+      SPRING_MAIL_USERNAME: maildev
+      SPRING_MAIL_PASSWORD: maildev
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      
+    networks:
+      - microbank-network
+
 volumes:
   minio-data:

@@ -6,13 +6,13 @@ spring:
     name: notification-service
 
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
 
   mail:
-    host: localhost
+    host: maildev
     port: 1025
     username: maildev
     password: maildev
@@ -29,6 +29,6 @@ sender-email: "no-reply@microbank.co"
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://discovery-service:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
