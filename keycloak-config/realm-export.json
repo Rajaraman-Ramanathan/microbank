@@ -496,6 +496,24 @@
       "groups": []
     },
     {
+    "username": "devops",
+    "enabled": true,
+    "emailVerified": true,
+    "firstName": "DevOps",
+    "lastName": "User",
+    "email": "devops@microbank.com",
+    "realmRoles": [
+      "default-roles-microbank"
+    ],
+    "credentials": [
+      {
+        "type": "password",
+        "value": "devops",
+        "temporary": false
+      }
+    ]
+  },
+    {
       "id": "f902f222-e7ae-4423-b6b5-2a8ab99843a3",
       "createdTimestamp": 1735494082271,
       "username": "service-account-microbank-client",
