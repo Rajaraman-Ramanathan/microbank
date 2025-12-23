@@ -44,7 +44,7 @@ keycloak:
     token-url: "http://keycloak:8080/realms/microbank/protocol/openid-connect/token"
     grant-type: "password"
     client-id: "microbank-client"
-    client-secret: "**********"
+    client-secret: "oVncCcoVMZCFRbiGA99ygvEcsclLcxW8"
   refresh-token:
     grant-type: "refresh_token"
   config:
