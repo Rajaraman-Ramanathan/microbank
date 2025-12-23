@@ -700,7 +700,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "0E3qKQwVTqbepjzCiVe3VfG41AqNEtNu",
       "redirectUris": [],
       "webOrigins": [],
       "notBefore": 0,
