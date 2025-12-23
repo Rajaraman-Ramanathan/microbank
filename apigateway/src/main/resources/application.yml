@@ -15,6 +15,14 @@ spring:
           enabled: true
           lower-case-service-id: true
 
+      routes:
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transaction-service/api/v1/transactions/**
+          filters:
+            - StripPrefix=1
+
   security:
     oauth2:
       resourceserver:
