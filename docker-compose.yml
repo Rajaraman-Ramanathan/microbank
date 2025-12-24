@@ -16,7 +16,7 @@ services:
       - ./keycloak-config:/opt/keycloak/data/import
     ports:
       - "9098:8080"
-    command: [ "start-dev", "--import-realm", "--hostname-strict=false", "--hostname-strict-https=false" ] # Last two flags should use only in development
+    command: [ "start-dev", "--import-realm", "--hostname=keycloak", "--hostname-strict=false", "--hostname-strict-https=false" ] # Last two flags should use only in development
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/realms/microbank || exit 1"]
       interval: 10s
