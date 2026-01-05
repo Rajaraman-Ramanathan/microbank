@@ -19,9 +19,7 @@ spring:
         - id: transaction-service
           uri: lb://transaction-service
           predicates:
-            - Path=/transaction-service/api/v1/transactions/**
-          filters:
-            - StripPrefix=1
+             - Path=/api/v1/transactions/**
 
   security:
     oauth2:
