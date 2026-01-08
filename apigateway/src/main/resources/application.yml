@@ -34,3 +34,10 @@ eureka:
     service-url:
       defaultZone: http://discovery-service:8761/eureka/
 
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
+    reactor.netty.http.client: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: DEBUG
+
