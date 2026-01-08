@@ -503,7 +503,8 @@
     "lastName": "User",
     "email": "devops@microbank.com",
     "realmRoles": [
-      "default-roles-microbank"
+      "default-roles-microbank",
+      "USER"
     ],
     "credentials": [
       {
