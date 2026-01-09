@@ -40,4 +40,5 @@ logging:
     org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
     reactor.netty.http.client: DEBUG
     org.springframework.web.server.adapter.HttpWebHandlerAdapter: DEBUG
+    org.apache.coyote.http11: DEBUG
 
