@@ -31,6 +31,8 @@ spring:
       enabled: true
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://discovery-service:8761/eureka/

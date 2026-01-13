@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @FeignClient(
         name = "account-service",
-        url = "http://localhost:8082/api/v1/accounts",
         configuration = FeignConfig.class
 )
 public interface AccountServiceClient {

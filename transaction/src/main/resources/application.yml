@@ -26,6 +26,8 @@ spring:
           jwk-set-uri: http://keycloak:8080/realms/microbank/protocol/openid-connect/certs
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://discovery-service:8761/eureka/
