@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = "auth-service", configuration = FeignConfig.class)
 public interface AuthServiceClient {
 
-    @GetMapping("/users/me")
+    @GetMapping("/api/v1/auth/users/me")
     BaseApiResponse<UserResponse> getCurrentUser();
 
 }

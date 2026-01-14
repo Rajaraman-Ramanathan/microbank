@@ -22,19 +22,19 @@ public interface AccountServiceClient {
     @GetMapping
     BaseApiResponse<List<AccountResponse>> getCurrentUsersAccounts();
 
-    @GetMapping("/admin/accounts/{accountId}")
+    @GetMapping("/api/v1/accounts/admin/accounts/{accountId}")
     BaseApiResponse<AccountResponse> getAccountById(@PathVariable("accountId") UUID accountId);
 
-    @GetMapping("/iban/{iban}")
+    @GetMapping("/api/v1/accounts/iban/{iban}")
     BaseApiResponse<AccountResponse> getAccountByIban(@PathVariable("iban") String iban);
 
-    @GetMapping("/{accountId}")
+    @GetMapping("/api/v1/accounts/{accountId}")
     BaseApiResponse<AccountResponse> getCurrentUsersAccountById(@PathVariable("accountId") UUID accountId);
 
-    @PutMapping("/balance")
+    @PutMapping("/api/v1/accounts/balance")
     BaseApiResponse<AccountResponse> updateAccountBalance(@RequestBody UpdateBalanceRequest request);
 
-    @GetMapping("/admin/users/{userId}/accounts")
+    @GetMapping("/api/v1/accounts/admin/users/{userId}/accounts")
     BaseApiResponse<List<AccountResponse>> getAccountsByUserId(@PathVariable("userId") UUID userId);
 
 }
