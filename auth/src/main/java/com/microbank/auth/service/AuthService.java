@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.security.oauth2.jwt.Jwt;
+
 public interface AuthService {
 
     BaseApiResponse<String> registerUser(RegisterRequest request);
@@ -17,13 +19,11 @@ public interface AuthService {
     BaseApiResponse<Map<String, Object>> refreshToken(RefreshTokenRequest refreshTokenRequest);
     BaseApiResponse<String> forgotPassword(@Valid ForgotPasswordRequest request);
     BaseApiResponse<UserResponse> resetPassword(@Valid ResetPasswordRequest request);
-
-    BaseApiResponse<UserResponse> getCurrentUser(String keycloakId);
-
     BaseApiResponse<UserResponse> getUserById(UUID userId);
     BaseApiResponse<List<UserResponse>> getAllUsers();
     BaseApiResponse<UserResponse> updateUserRole(UpdateRoleRequest request);
     BaseApiResponse<UserResponse> updateUserAccess(UpdateAccessRequest request);
     BaseApiResponse<String> deleteUser(UUID userId);
+    BaseApiResponse<UserResponse> getCurrentUser(Jwt jwt);
 
 }

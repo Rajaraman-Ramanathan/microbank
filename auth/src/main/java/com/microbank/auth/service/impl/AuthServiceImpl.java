@@ -14,6 +14,8 @@ import com.microbank.auth.repository.UserRepository;
 import com.microbank.auth.response.BaseApiResponse;
 import com.microbank.auth.service.AuthService;
 import com.microbank.auth.service.utils.UserServiceUtils;
+import com.nimbusds.jwt.JWT;
+
 import jakarta.ws.rs.core.Response;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -26,6 +28,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -431,19 +434,23 @@ public class AuthServiceImpl implements AuthService {
         );
     }
 
-    private UserResponse getUserByKeycloakId(String keycloakId) {
+    private UserResponse getUserByKeycloakId(Jwt jwt) {
+        String keycloakId = jwt.getSubject();
         User user = userRepository.findByKeycloakId(keycloakId)
-                .orElseThrow(() -> new RuntimeException("User not found with Keycloak ID: " + keycloakId));
+                .orElseGet(() -> {
+                    User newUser = userServiceUtils.buildUserFromJwt(jwt);
+                    return userRepository.save(newUser);
+                });
 
         return userServiceUtils.buildUserResponse(user);
     }
 
     @Override
-    public BaseApiResponse<UserResponse> getCurrentUser(String keycloakId) {
+    public BaseApiResponse<UserResponse> getCurrentUser(Jwt jwt) {
         return new BaseApiResponse<>(
                 HttpStatus.OK.value(),
                 "Current user's profile retrieved successfully.",
-                getUserByKeycloakId(keycloakId)
+                getUserByKeycloakId(jwt)
         );
     }
 

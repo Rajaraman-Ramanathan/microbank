@@ -65,8 +65,7 @@ public class AuthController {
 
     @GetMapping("/users/me")
     public ResponseEntity<BaseApiResponse<UserResponse>> getCurrentUsersProfile(@AuthenticationPrincipal Jwt jwt) {
-        String keycloakId = jwt.getClaimAsString("sub");
-        BaseApiResponse<UserResponse> response = authService.getCurrentUser(keycloakId);
+        BaseApiResponse<UserResponse> response = authService.getCurrentUser(jwt);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
