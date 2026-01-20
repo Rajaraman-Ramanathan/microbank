@@ -41,6 +41,7 @@ public class UserServiceUtils {
         user.setLastName(jwt.getClaim("family_name"));
         user.setActivated(true);
         user.setBanned(false);
+        user.setPassword("{keycloak}"); // Password not used for Keycloak users
         user.setRole(UserRole.USER); // default role
         return user;
     }
