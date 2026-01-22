@@ -23,6 +23,12 @@ spring:
     discovery:
       enabled: true
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
   security:
     oauth2:
       resourceserver:
