@@ -1,5 +1,7 @@
 package com.microbank.transaction.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microbank.transaction.dto.event.TransactionEvent;
 import com.microbank.transaction.dto.request.CreateTransactionRequest;
 import com.microbank.transaction.dto.request.UpdateBalanceRequest;
@@ -32,19 +34,22 @@ public class TransactionServiceImpl implements TransactionService {
     private final RabbitTemplate rabbitTemplate;
     private final AccountServiceClient accountServiceClient;
     private final AuthServiceClient authServiceClient;
+    private final ObjectMapper objectMapper; 
 
     public TransactionServiceImpl(
             TransactionRepository transactionRepository,
             TransactionResponseBuilder transactionResponseBuilder,
             RabbitTemplate rabbitTemplate,
             AccountServiceClient accountServiceClient,
-            AuthServiceClient authServiceClient
+            AuthServiceClient authServiceClient,
+            ObjectMapper objectMapper
     ) {
         this.transactionRepository = transactionRepository;
         this.transactionResponseBuilder = transactionResponseBuilder;
         this.rabbitTemplate = rabbitTemplate;
         this.accountServiceClient = accountServiceClient;
         this.authServiceClient = authServiceClient;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -114,7 +119,11 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.getTimestamp()
         );
 
-        rabbitTemplate.convertAndSend("transaction-queue", event);
+        try {
+            rabbitTemplate.convertAndSend("transaction-queue", objectMapper.writeValueAsString(event));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error while sending transaction event to the queue.", e);
+        }   
 
         TransactionResponse transactionResponse = transactionResponseBuilder.buildTransactionResponse(transaction);
         return new BaseApiResponse<>(
