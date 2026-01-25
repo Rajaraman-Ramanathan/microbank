@@ -7,10 +7,16 @@ import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
 
 @Service
 public class MinIOServiceImpl implements MinIOService {
+
+    private static final Logger log =
+            LoggerFactory.getLogger(MinIOServiceImpl.class);
 
     private final MinioClient minioClient;
 
@@ -38,7 +44,7 @@ public class MinIOServiceImpl implements MinIOService {
                     PutObjectArgs.builder()
                             .bucket(bucketName)
                             .object(fileName)
-                            .stream(fileStream, fileStream.available(), -1)
+                            .stream(fileStream, -1, 10 * 1024 * 1024)
                             .contentType(contentType)
                             .build()
             );
@@ -52,6 +58,7 @@ public class MinIOServiceImpl implements MinIOService {
                             .build()
             );
         } catch (Exception e) {
+            log.error("MinIO upload failed", e);
             throw new CustomException("Error while uploading file to MinIO");
         }
     }
