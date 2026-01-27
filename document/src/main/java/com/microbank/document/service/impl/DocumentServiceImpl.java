@@ -11,6 +11,9 @@ import com.microbank.document.service.utils.TransactionDocumentResponseBuilder;
 import com.microbank.document.utils.PDFGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -22,6 +25,8 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
     private final MinIOService minIOService;
     private final TransactionDocumentResponseBuilder transactionDocumentResponseBuilder;
+    private static final Logger log =
+            LoggerFactory.getLogger(DocumentServiceImpl.class);
 
     public DocumentServiceImpl(
             DocumentRepository documentRepository,
@@ -90,5 +95,28 @@ public class DocumentServiceImpl implements DocumentService {
         );
     }
 
+    @Override
+    public void uploadDocument(MultipartFile file, UUID transactionId) {
+        try {
+            log.info("Uploading document to MinIO | txId={} | file={}",
+                    transactionId,
+                    file.getOriginalFilename()
+            );
 
+            String objectName =
+                    transactionId + "/" + file.getOriginalFilename();
+
+            minIOService.uploadFile(
+                    objectName,
+                    file.getInputStream(),
+                    file.getContentType()
+            );
+
+            log.info("MinIO upload successful | txId={}", transactionId);
+
+        } catch (Exception e) {
+            log.error("Document upload failed | txId={}", transactionId, e);
+            throw new RuntimeException("Document upload failed", e);
+        }
+    }
 }

@@ -7,6 +7,8 @@ import com.microbank.document.response.BaseApiResponse;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface DocumentService {
 
     // is being processed asynchronously in transaction-queue
@@ -16,5 +18,5 @@ public interface DocumentService {
     BaseApiResponse<TransactionDocumentResponse> getTransactionDocumentById(UUID documentId);
     BaseApiResponse<TransactionDocumentResponse> getTransactionDocumentByTransactionId(UUID transactionId);
     BaseApiResponse<List<TransactionDocumentResponse>> getAllTransactionDocuments();
-
+    void uploadDocument(MultipartFile file, UUID transactionId);
 }
