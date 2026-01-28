@@ -280,8 +280,11 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void uploadTransactionDocument(UUID transactionId, MultipartFile file) {
+        System.out.println("SERVICE METHOD HIT");
+        System.out.println("FEIGN CALL ABOUT TO HAPPEN");
         log.info("Calling Document Service for upload | txId={}", transactionId);
         documentServiceClient.uploadDocument(file, transactionId);
+        System.out.println("FEIGN CALL COMPLETED");
         log.info("Document upload triggered | txId={}", transactionId);
 }
 

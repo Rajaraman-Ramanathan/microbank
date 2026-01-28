@@ -41,7 +41,8 @@ public class TransactionController {
     public ResponseEntity<Void> uploadTransactionDocument(
         @PathVariable UUID transactionId,
         @RequestPart("file") MultipartFile file
-) {
+    ) {
+    System.out.println("TRANSACTION CONTROLLER HIT");
     transactionService.uploadTransactionDocument(transactionId, file);
     return ResponseEntity.ok().build();
 }
