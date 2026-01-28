@@ -11,6 +11,7 @@ import com.microbank.transaction.exceptions.NotFoundException;
 import com.microbank.transaction.exceptions.UnauthorizedException;
 import com.microbank.transaction.feign.AccountServiceClient;
 import com.microbank.transaction.feign.AuthServiceClient;
+import com.microbank.transaction.feign.DocumentServiceClient;
 import com.microbank.transaction.model.Transaction;
 import com.microbank.transaction.repository.TransactionRepository;
 import com.microbank.transaction.response.BaseApiResponse;
@@ -20,6 +21,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
     private final RabbitTemplate rabbitTemplate;
     private final AccountServiceClient accountServiceClient;
     private final AuthServiceClient authServiceClient;
+    private final DocumentServiceClient documentServiceClient;
+    private static final Logger log =
+            LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     public TransactionServiceImpl(
             TransactionRepository transactionRepository,
@@ -40,6 +47,7 @@ public class TransactionServiceImpl implements TransactionService {
             RabbitTemplate rabbitTemplate,
             AccountServiceClient accountServiceClient,
             AuthServiceClient authServiceClient,
+            DocumentServiceClient documentServiceClient,
             ObjectMapper objectMapper
     ) {
         this.transactionRepository = transactionRepository;
@@ -47,6 +55,7 @@ public class TransactionServiceImpl implements TransactionService {
         this.rabbitTemplate = rabbitTemplate;
         this.accountServiceClient = accountServiceClient;
         this.authServiceClient = authServiceClient;
+        this.documentServiceClient = documentServiceClient;
     }
 
     @Override
@@ -268,5 +277,13 @@ public class TransactionServiceImpl implements TransactionService {
                 transactionResponses
         );
     }
+
+    @Override
+    public void uploadTransactionDocument(UUID transactionId, MultipartFile file) {
+        log.info("Calling Document Service for upload | txId={}", transactionId);
+        documentServiceClient.uploadDocument(file, transactionId);
+        log.info("Document upload triggered | txId={}", transactionId);
+}
+
 
 }

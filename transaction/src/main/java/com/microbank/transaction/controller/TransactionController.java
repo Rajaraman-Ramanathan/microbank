@@ -5,9 +5,13 @@ import com.microbank.transaction.dto.response.TransactionResponse;
 import com.microbank.transaction.response.BaseApiResponse;
 import com.microbank.transaction.service.TransactionService;
 import jakarta.validation.Valid;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +32,19 @@ public class TransactionController {
         BaseApiResponse<TransactionResponse> response = transactionService.createTransaction(request);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @PostMapping(
+    value = "/{transactionId}/documents",
+    consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Void> uploadTransactionDocument(
+        @PathVariable UUID transactionId,
+        @RequestPart("file") MultipartFile file
+) {
+    transactionService.uploadTransactionDocument(transactionId, file);
+    return ResponseEntity.ok().build();
+}
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")

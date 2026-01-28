@@ -6,6 +6,7 @@ import com.microbank.transaction.dto.response.TransactionResponse;
 import com.microbank.transaction.response.BaseApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,5 +22,7 @@ public interface TransactionService {
     BaseApiResponse<TransactionResponse> getTransactionById(UUID transactionId);
     BaseApiResponse<List<TransactionResponse>> getTransactionsByAccountId(UUID accountId);
     BaseApiResponse<List<TransactionResponse>> getTransactionsByUserId(UUID userId);
+    void uploadTransactionDocument(UUID transactionId, MultipartFile file);
+
 
 }
