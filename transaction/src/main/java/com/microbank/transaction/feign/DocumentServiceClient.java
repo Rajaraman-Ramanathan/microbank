@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.UUID;
 
 @FeignClient(
     name = "document-service",
@@ -22,7 +21,7 @@ public interface DocumentServiceClient {
     )
     void uploadDocument(
         @RequestPart("file") MultipartFile file,
-        @RequestPart("transactionId") UUID transactionId
+        @RequestPart("transactionId") String transactionId
     );
 }
 

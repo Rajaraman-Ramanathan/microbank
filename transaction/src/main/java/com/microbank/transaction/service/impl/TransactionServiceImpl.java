@@ -283,7 +283,7 @@ public class TransactionServiceImpl implements TransactionService {
         System.out.println("SERVICE METHOD HIT");
         System.out.println("FEIGN CALL ABOUT TO HAPPEN");
         log.info("Calling Document Service for upload | txId={}", transactionId);
-        documentServiceClient.uploadDocument(file, transactionId);
+        documentServiceClient.uploadDocument(file, transactionId.toString());
         System.out.println("FEIGN CALL COMPLETED");
         log.info("Document upload triggered | txId={}", transactionId);
 }
