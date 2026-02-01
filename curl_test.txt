@@ -1,0 +1,60 @@
+curl -X POST http://65.2.129.239:9098/realms/microbank/protocol/openid-connect/token \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "grant_type=password" \
+-d "client_id=microbank-client" \
+-d "client_secret=oVncCcoVMZCFRbiGA99ygvEcsclLcxW8" \
+-d "username=devops" \
+-d "password=devops"
+
+
+*) For Internal Transfer:
+-----------------------------
+curl -X POST http://65.2.129.239:8123/api/v1/transactions \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYRzJTVm83ZHNYY1dxNFh5a0d3NVZsWWVLZ2JfSl9wTENDWEZYdFNLZHEwIn0.eyJleHAiOjE3Njk5MjM2NzksImlhdCI6MTc2OTkyMzM3OSwianRpIjoiMzkxZWM3MmUtMTA2YS00NGMwLTk1OGItNWU1NTNjY2QxMDg4IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvcmVhbG1zL21pY3JvYmFuayIsImF1ZCI6WyJtaWNyb2JhbmstY2xpZW50IiwiYWNjb3VudCJdLCJzdWIiOiI5N2ZjOTdlMi0yMDk0LTQ5NDgtYTM2OC0wZGY5OGJiZWM0MTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyb2JhbmstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImM2YWFiMWIyLWU3YTUtNDFjMy1hZTc5LWNlNGEyOWY3ZWUxMSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIiwiZGVmYXVsdC1yb2xlcy1taWNyb2JhbmsiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJjNmFhYjFiMi1lN2E1LTQxYzMtYWU3OS1jZTRhMjlmN2VlMTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRldk9wcyBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGV2b3BzIiwiZ2l2ZW5fbmFtZSI6IkRldk9wcyIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZGV2b3BzQG1pY3JvYmFuay5jb20ifQ.V4P78OytTEJvrH6YJcpxvXAIJzCKpMUXCF-jPW1TRqdPVXfCna7ltRH1PA9zp9SG4n34aPqrW3dGo18J82EO3b9MB-5YEyP8fxwgrkEqlJWyGRyla7NIzkpx9OFBmQUmyIMVr44jWmd9VAFenskxVEMxGUoJJ1facCeR7wczYXTYblxPnXDmWInnUuiu-P0saGITIytoNwycblY0nBBX1mdRlyodwjp9jdd55g13KC5NMWbHpA_72hg4cEgQBAHnRaRGy-3k8BGJTEmlfbSsbFOHdrechMB11tGd5-cUGpuXEIEHq_GAuWDCfq6551OvTY0IBifvfXEY_fUi7Le2dg" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "senderAccountId": "2a196d35-5531-4086-be8a-712e53c9df05",
+        "receiverAccountId": "880f9b3b-cacb-42b9-9285-5949b7794333",
+        "amount": 200,
+        "description": "End-to-end system verification"
+      }'
+
+*) For External Transfer:
+-----------------------------
+curl -X POST http://65.2.129.239:8123/api/v1/transactions \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYRzJTVm83ZHNYY1dxNFh5a0d3NVZsWWVLZ2JfSl9wTENDWEZYdFNLZHEwIn0.eyJleHAiOjE3Njk5MjM2NzksImlhdCI6MTc2OTkyMzM3OSwianRpIjoiMzkxZWM3MmUtMTA2YS00NGMwLTk1OGItNWU1NTNjY2QxMDg4IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvcmVhbG1zL21pY3JvYmFuayIsImF1ZCI6WyJtaWNyb2JhbmstY2xpZW50IiwiYWNjb3VudCJdLCJzdWIiOiI5N2ZjOTdlMi0yMDk0LTQ5NDgtYTM2OC0wZGY5OGJiZWM0MTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyb2JhbmstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImM2YWFiMWIyLWU3YTUtNDFjMy1hZTc5LWNlNGEyOWY3ZWUxMSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIiwiZGVmYXVsdC1yb2xlcy1taWNyb2JhbmsiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJjNmFhYjFiMi1lN2E1LTQxYzMtYWU3OS1jZTRhMjlmN2VlMTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRldk9wcyBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGV2b3BzIiwiZ2l2ZW5fbmFtZSI6IkRldk9wcyIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZGV2b3BzQG1pY3JvYmFuay5jb20ifQ.V4P78OytTEJvrH6YJcpxvXAIJzCKpMUXCF-jPW1TRqdPVXfCna7ltRH1PA9zp9SG4n34aPqrW3dGo18J82EO3b9MB-5YEyP8fxwgrkEqlJWyGRyla7NIzkpx9OFBmQUmyIMVr44jWmd9VAFenskxVEMxGUoJJ1facCeR7wczYXTYblxPnXDmWInnUuiu-P0saGITIytoNwycblY0nBBX1mdRlyodwjp9jdd55g13KC5NMWbHpA_72hg4cEgQBAHnRaRGy-3k8BGJTEmlfbSsbFOHdrechMB11tGd5-cUGpuXEIEHq_GAuWDCfq6551OvTY0IBifvfXEY_fUi7Le2dg" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "senderAccountId": "e1505d93-bb53-4e92-9e5f-a540ac7561df",
+        "receiverAccountIban": "DE0987654321",
+        "amount": 250.75,
+        "description": "End-to-end system verification"
+      }'
+
+curl -X POST http://65.2.129.239:8123/api/v1/accounts \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYRzJTVm83ZHNYY1dxNFh5a0d3NVZsWWVLZ2JfSl9wTENDWEZYdFNLZHEwIn0.eyJleHAiOjE3Njk5MjM2NzksImlhdCI6MTc2OTkyMzM3OSwianRpIjoiMzkxZWM3MmUtMTA2YS00NGMwLTk1OGItNWU1NTNjY2QxMDg4IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvcmVhbG1zL21pY3JvYmFuayIsImF1ZCI6WyJtaWNyb2JhbmstY2xpZW50IiwiYWNjb3VudCJdLCJzdWIiOiI5N2ZjOTdlMi0yMDk0LTQ5NDgtYTM2OC0wZGY5OGJiZWM0MTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyb2JhbmstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImM2YWFiMWIyLWU3YTUtNDFjMy1hZTc5LWNlNGEyOWY3ZWUxMSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIiwiZGVmYXVsdC1yb2xlcy1taWNyb2JhbmsiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJjNmFhYjFiMi1lN2E1LTQxYzMtYWU3OS1jZTRhMjlmN2VlMTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRldk9wcyBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGV2b3BzIiwiZ2l2ZW5fbmFtZSI6IkRldk9wcyIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZGV2b3BzQG1pY3JvYmFuay5jb20ifQ.V4P78OytTEJvrH6YJcpxvXAIJzCKpMUXCF-jPW1TRqdPVXfCna7ltRH1PA9zp9SG4n34aPqrW3dGo18J82EO3b9MB-5YEyP8fxwgrkEqlJWyGRyla7NIzkpx9OFBmQUmyIMVr44jWmd9VAFenskxVEMxGUoJJ1facCeR7wczYXTYblxPnXDmWInnUuiu-P0saGITIytoNwycblY0nBBX1mdRlyodwjp9jdd55g13KC5NMWbHpA_72hg4cEgQBAHnRaRGy-3k8BGJTEmlfbSsbFOHdrechMB11tGd5-cUGpuXEIEHq_GAuWDCfq6551OvTY0IBifvfXEY_fUi7Le2dg" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "initialBalance": 1000
+      }'
+
+curl -X POST \
+  http://65.2.129.239:8123/api/v1/transactions/c1a5bfb8-069d-44e3-9c1f-861b08ee80ad/documents \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYRzJTVm83ZHNYY1dxNFh5a0d3NVZsWWVLZ2JfSl9wTENDWEZYdFNLZHEwIn0.eyJleHAiOjE3Njk5MjM2NzksImlhdCI6MTc2OTkyMzM3OSwianRpIjoiMzkxZWM3MmUtMTA2YS00NGMwLTk1OGItNWU1NTNjY2QxMDg4IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvcmVhbG1zL21pY3JvYmFuayIsImF1ZCI6WyJtaWNyb2JhbmstY2xpZW50IiwiYWNjb3VudCJdLCJzdWIiOiI5N2ZjOTdlMi0yMDk0LTQ5NDgtYTM2OC0wZGY5OGJiZWM0MTIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyb2JhbmstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImM2YWFiMWIyLWU3YTUtNDFjMy1hZTc5LWNlNGEyOWY3ZWUxMSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIiwiZGVmYXVsdC1yb2xlcy1taWNyb2JhbmsiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJjNmFhYjFiMi1lN2E1LTQxYzMtYWU3OS1jZTRhMjlmN2VlMTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRldk9wcyBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGV2b3BzIiwiZ2l2ZW5fbmFtZSI6IkRldk9wcyIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZGV2b3BzQG1pY3JvYmFuay5jb20ifQ.V4P78OytTEJvrH6YJcpxvXAIJzCKpMUXCF-jPW1TRqdPVXfCna7ltRH1PA9zp9SG4n34aPqrW3dGo18J82EO3b9MB-5YEyP8fxwgrkEqlJWyGRyla7NIzkpx9OFBmQUmyIMVr44jWmd9VAFenskxVEMxGUoJJ1facCeR7wczYXTYblxPnXDmWInnUuiu-P0saGITIytoNwycblY0nBBX1mdRlyodwjp9jdd55g13KC5NMWbHpA_72hg4cEgQBAHnRaRGy-3k8BGJTEmlfbSsbFOHdrechMB11tGd5-cUGpuXEIEHq_GAuWDCfq6551OvTY0IBifvfXEY_fUi7Le2dg" \
+  -F "file=@document.logs"
+
+
+
+curl -v -X POST http://65.2.129.239:8083/api/v1/transactions \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5bFBYWF9NbUh5U0dJODh2WEV6S1lEZjIzcmRadDFmcEdRR0RiWmtmbFRRIn0.eyJleHAiOjE3Njk5MjA2NDcsImlhdCI6MTc2OTkyMDM0NywianRpIjoiNjA0ZDI4MTEtYjMxNy00OWNmLTliYTMtMDgzOGUxYTc3NDM3IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvcmVhbG1zL21pY3JvYmFuayIsImF1ZCI6WyJtaWNyb2JhbmstY2xpZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3Y2YyZDBjNy02NzM0LTQ5ZDItODhiNy05MTRhMTUxNmRkODEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyb2JhbmstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjZkZDQzYzg3LTI0M2MtNDEyNC1hZTU0LTUwZDRlY2UxMGI5YiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIiwiZGVmYXVsdC1yb2xlcy1taWNyb2JhbmsiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI2ZGQ0M2M4Ny0yNDNjLTQxMjQtYWU1NC01MGQ0ZWNlMTBiOWIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRldk9wcyBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGV2b3BzIiwiZ2l2ZW5fbmFtZSI6IkRldk9wcyIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZGV2b3BzQG1pY3JvYmFuay5jb20ifQ.qIVet4SjYZe3l49BzC2OZyfk5N4BDHxF3xKUgrPKLwLF-cIfgH4tOyve-_YXoZOR7ZfLT1XDskM5ZSjgoJ6SPP0d7ljpvbInRF3uhn4UkvbC7ZI1HdSFHWFTYjHw_wb7KPWgogAS2OmHrkCmfaq4scimnoseN97pqaCFrbgmIlCad27RySOr6Lzy0BdFG--6vfgg9XH2Xb439SUtFjL7FM7z2NqagI7q38k4-OpVM64wTSs9cKrAAjltdZD-6O-KMsm8sgQDKe-EuuGA-UhXeqnrfWFGLn6OIYJyeQirMVoIdPpwgXpsmoqepPD5J4JN-B5I2ijw3YG4CYnVxdndeQ" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "senderAccountId": "11111111-1111-1111-1111-111111111111",
+        "receiverAccountIban": "DE0987654321",
+        "amount": 250.75,
+        "description": "Direct service test"
+      }'
+
+{"status":201,"message":"Account created successfully.","data":{"id":"2a196d35-5531-4086-be8a-712e53c9df05","IBAN":"MB628594833693","balance":1000,"isBlocked":false,"ownerName":"DEVOPS USER","ownerId":"31e93621-afdd-4e51-8388-23eb523a85dd","ownerEmail":"devops@microbank.com"},"timestamp":"2026-02-01T05:24:13.655655676","errors":null}
+{"status":201,"message":"Account created successfully.","data":{"id":"880f9b3b-cacb-42b9-9285-5949b7794333","IBAN":"MB493982617294","balance":2000,"isBlocked":false,"ownerName":"DEVOPS USER","ownerId":"31e93621-afdd-4e51-8388-23eb523a85dd","ownerEmail":"devops@microbank.com"},"timestamp":"2026-02-01T05:24:31.976914995","errors":null}
+{"status":201,"message":"Transaction created successfully.","data":{"id":"c1a5bfb8-069d-44e3-9c1f-861b08ee80ad","senderAccountId":"880f9b3b-cacb-42b9-9285-5949b7794333","receiverAccountId":"880f9b3b-cacb-42b9-9285-5949b7794333","amount":200,"description":"End-to-end system verification"},"timestamp":"2026-02-01T05:25:44.104676544","errors":null}
