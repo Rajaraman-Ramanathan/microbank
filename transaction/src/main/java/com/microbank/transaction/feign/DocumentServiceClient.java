@@ -21,7 +21,7 @@ public interface DocumentServiceClient {
     )
     void uploadDocument(
         @RequestPart("file") MultipartFile file,
-        @RequestPart("transactionId") String transactionId
+        @RequestParam("transactionId") String transactionId
     );
 }
 
