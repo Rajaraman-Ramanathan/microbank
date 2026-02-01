@@ -1,4 +1,4 @@
-curl -X POST http://65.2.129.239:9098/realms/microbank/protocol/openid-connect/token \
+curl -X POST http://3.110.193.47:9098/realms/microbank/protocol/openid-connect/token \
 -H "Content-Type: application/x-www-form-urlencoded" \
 -d "grant_type=password" \
 -d "client_id=microbank-client" \
