@@ -1,4 +1,4 @@
-curl -X POST http://localhost:8080/realms/microbank/protocol/openid-connect/token \
+curl -X POST http://auth.microbank.local:8080/realms/microbank/protocol/openid-connect/token \
 -H "Content-Type: application/x-www-form-urlencoded" \
 -d "grant_type=password" \
 -d "client_id=microbank-client" \
@@ -31,7 +31,7 @@ curl -X POST http://65.2.129.239:8123/api/v1/transactions \
         "description": "End-to-end system verification"
       }'
 
-curl -X POST http://api.microbank.local/api/v1/accounts \
+curl -X POST http://api.microbank.local:8080/api/v1/accounts \
   -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiZy04d1c1REE0b3BMYXhTc2tpV2lZcFlXMjlJWXVSWW84UWhkdEdNUlpJIn0.eyJleHAiOjE3NzIwMjIxNDMsImlhdCI6MTc3MjAyMTg0MywianRpIjoiNjcwMjhmZjktZDljYi00ODlkLTk5MjAtZjkxMDc4ZDBmMTUwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9taWNyb2JhbmsiLCJhdWQiOlsibWljcm9iYW5rLWNsaWVudCIsImFjY291bnQiXSwic3ViIjoiNzg2OGQ1NTAtNDQ1OS00ZjI2LWJiYzUtZjE2NDA0NjM5OGZiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWljcm9iYW5rLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI2MDQwNTdiNi0xYzZiLTQwYzQtOTRjYy04NjJiYTRmNWE4MTMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiVVNFUiIsImRlZmF1bHQtcm9sZXMtbWljcm9iYW5rIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiNjA0MDU3YjYtMWM2Yi00MGM0LTk0Y2MtODYyYmE0ZjVhODEzIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJEZXZPcHMgVXNlciIsInByZWZlcnJlZF91c2VybmFtZSI6ImRldm9wcyIsImdpdmVuX25hbWUiOiJEZXZPcHMiLCJmYW1pbHlfbmFtZSI6IlVzZXIiLCJlbWFpbCI6ImRldm9wc0BtaWNyb2JhbmsuY29tIn0.OC3N7p6itg11ziw4yvWn-Mx3Ey5XqhEci2Aiu419Sma55IejC5pFeVvpzDrNmdIy5glCJLDeMKOTqFEvYHRzcuSH_xU7gjKo_zhBNhdo1RsJBKxGl1k_WimI6QPmR0_UPAjY6tYlfehbyoZQ_w7gQ78wXoUvghv3GOkV_qvCJzjFN62XZM6PLqzvv59y4lWlBBlZcWquEFmDhpPL10-bccfJHL1xZR-V4QSPGmgbuomwduOi3pEVX5lsXnQqOYNCu4mdA25gNwcJT1K63LtM6caRupdhHbuAuRQlAlVIu8zPEC41pVe8YCBEAj4BzcAFea6a_WXxe3J74rUDpURV9Q" \
   -H "Content-Type: application/json" \
   -d '{
