@@ -1,0 +1,39 @@
+kind create cluster --name argocd-hub
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl get pods -n ingress-nginx
+kubectl create namespace argocd
+kubectl create -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl get pods -n argocd
+
+
+kind create cluster --name microbank-dev --config kind-cluster-config.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl get pods -n ingress-nginx
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+*) To overcome self signed TLS issue:
+kubectl patch deployment metrics-server -n kube-system \
+  --type='json' \
+  -p='[
+    {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"},
+    {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-preferred-address-types=InternalIP"}
+  ]'
+
+*) Port forward argocd UI app:
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+kubectl get secret argocd-initial-admin-secret -n argocd \
+-o jsonpath="{.data.password}" | base64 -d
+argocd:
+username: admin
+password: k4JTmd80De0-Qmt6
+
+*) Register dev cluster with argocd:
+1. install argocd-cli
+2. argocd login localhost:8080 --insecure
+3. argocd cluster add kind-microbank-dev
+4. argocd cluster list
+5. If issue like ip 127.0.0.1 in kube config then need to change correct ip address of 
+   dev cluster control plane.
+   kubectl config set-cluster kind-microbank-dev \
+  --server=https://172.18.0.4:6443
