@@ -1,4 +1,24 @@
-kind create cluster --name argocd-hub
+*) creating clusters in different network (VPC) in kind simulating multi vpc cluster
+   and vpc peering:
+1. create two docker networks.
+   docker network create argocd-net
+   docker network create dev-net
+2. kind create cluster --name argocd-hub
+3. docker network connect argocd-net argocd-hub-control-plane
+4. verify argocd in correct network
+   i) docker inspect argocd-hub-control-plane
+   ii) docker network inspect argocd-net - optionally from network perspective
+5. create dev cluster
+   kind create cluster --name microbank-dev --config=kind-cluster-config.yaml
+6. docker network connect microbank-dev-net microbank-dev-control-plane
+7. create peering network
+   docker network create peering-net
+8. connect controlplane of both cluster to peering network.
+   docker network connect peering-net argocd-hub-control-plane
+   docker network connect peering-net microbank-dev-control-plane
+
+
+*) Required installation in argocd-hub cluster:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 kubectl get pods -n ingress-nginx
 kubectl create namespace argocd
@@ -6,34 +26,51 @@ kubectl create -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/s
 kubectl get pods -n argocd
 
 
-kind create cluster --name microbank-dev --config kind-cluster-config.yaml
+*) Required installation in microbank-dev cluster:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 kubectl get pods -n ingress-nginx
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
-*) To overcome self signed TLS issue:
+*) To overcome self signed TLS issue in microbank-dev cluster:
 kubectl patch deployment metrics-server -n kube-system \
   --type='json' \
   -p='[
     {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"},
     {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-preferred-address-types=InternalIP"}
   ]'
+kubectl rollout restart deployment metrics-server -n kube-system
 
-*) Port forward argocd UI app:
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+*) Add coredns configmap with the following for internal dns resolution:
+   rewrite name auth.microbank.local keycloak.keycloak.svc.cluster.local
 
-kubectl get secret argocd-initial-admin-secret -n argocd \
--o jsonpath="{.data.password}" | base64 -d
-argocd:
-username: admin
-password: k4JTmd80De0-Qmt6
 
-*) Register dev cluster with argocd:
-1. install argocd-cli
-2. argocd login localhost:8080 --insecure
-3. argocd cluster add kind-microbank-dev
-4. argocd cluster list
-5. If issue like ip 127.0.0.1 in kube config then need to change correct ip address of 
-   dev cluster control plane.
-   kubectl config set-cluster kind-microbank-dev \
-  --server=https://172.18.0.4:6443
+*) Create RBAC and secrets for argocd:
+1. create service account, cluster role, cluster role binding and cluster secret for argocd
+2. manually apply these resources in microbank-dev cluster for the first time.
+   kubectl apply -k platform/bootstrap/rbac
+3. Then create token for arocd-manager
+   kubectl create token argocd-manager -n kube-system
+4. Get CA certificate
+   kubectl config view --raw -o jsonpath="{.clusters[?(@.name=='kind-microbank-dev')].cluster.certificate-authority-data}"
+5. switch to argocd-hub cluster and create cluster secret for argocd
+
+
+*) Verify cluster added with argocd cluster:
+1. install argocd-cli ( only if not installed previously, otherwise ignore)
+2. kubectl port-forward svc/argocd-server -n argocd 8080:443
+3. kubectl delete secret microbank-dev-cluster -n argocd
+4. kubectl apply -f .\argocd\cluster-config\dev\
+5. kubectl get secret argocd-initial-admin-secret -n argocd \
+   -o jsonpath="{.data.password}" | base64 -d
+6. argocd login localhost:8080 --insecure
+   argocd:
+   username: admin
+   password: k4JTmd80De0-Qmt6
+7. argocd cluster list
+   Must display list of clusters connected with argocd hub.
+
+
+[wsl2]
+memory=12GB
+processors=6
+swap=2GB
