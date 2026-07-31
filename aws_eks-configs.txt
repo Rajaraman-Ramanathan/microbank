@@ -1,0 +1,17 @@
+1. Install aws cli and verify
+   aws --version
+2. aws configure
+3. aws sts get-caller-identity
+4. kubectl version --client
+5. aws eks update-kubeconfig --region ap-south-1 --name microbank-dev-cluster
+6. kubectl config current-context
+7. kubectl config get-contexts
+8. switch context:
+   kubectl config use-context arn:aws:eks:ap-south-1:xxxx:cluster/microbank-dev-cluster
+   kubectl config use-context kind-argocd-hub
+
+9. argocd cluster add <AWS_CONTEXT_NAME> --name microbank-dev-cluster --service-account argocd-manager --system-namespace kube-system
+10. tag aws subnets to,
+   kubernetes.io/role/elb=1
+   kubernetes.io/role/internal-elb=1
+

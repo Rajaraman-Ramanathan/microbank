@@ -68,6 +68,8 @@ kubectl rollout restart deployment metrics-server -n kube-system
    password: k4JTmd80De0-Qmt6
 7. argocd cluster list
    Must display list of clusters connected with argocd hub.
+8. to remove any cluster:
+   argocd cluster rm <CLUSTER_NAME_OR_URL>
 
 
 [wsl2]
